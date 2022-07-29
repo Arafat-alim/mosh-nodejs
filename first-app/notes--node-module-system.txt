@@ -1,0 +1,9 @@
+Some of the global objects are -
+console.log()
+clearInterval()
+clearTimeout()
+setInterval()
+setTimeout()
+
+=== Parent object in Node
+global
