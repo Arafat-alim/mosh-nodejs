@@ -1,5 +1,8 @@
-function sayHello(name) {
-  console.log("Hello " + name);
-}
+// function sayHello(name) {
+//   console.log("Hello " + name);
+// }
 
-sayHello("Arafat");
+// sayHello("Arafat");
+
+//every file in node is module
+console.log(module);
