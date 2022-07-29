@@ -5,5 +5,5 @@ clearTimeout()
 setInterval()
 setTimeout()
 
-=== Parent object in Node
+=== Parent object in Node define global scope.
 global
