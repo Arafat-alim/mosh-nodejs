@@ -8,5 +8,6 @@
 // console.log(module);
 const pathObj = require("./path");
 const log = require("./logger");
+const freeMem = require("./os");
 
 log("Arafat"); //! Arafat
