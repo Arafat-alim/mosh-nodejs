@@ -5,4 +5,7 @@
 // sayHello("Arafat");
 
 //every file in node is module
-console.log(module);
+// console.log(module);
+
+const log = require("./logger");
+log("Arafat"); //! Arafat
