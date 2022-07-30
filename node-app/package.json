@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cocoder-lib": "^1.0.0"
+    "cocoder-lib": "^1.1.0"
   }
 }
