@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const Joi = require("joi");
 //Adding Middleware
 app.use(express.json());
 
@@ -37,6 +38,25 @@ app.get("/api/courses/:id", (req, res) => {
 
 //! handling POST Request
 app.post("/api/courses", (req, res) => {
+  //! Validating  - Wihtout using JOI
+  // if (!req.params.name || req.params.name.length < 3) {
+  //   res.status(400).send("Please Enter a name which is more than 3 characters");
+  //   return;
+  // }
+
+  //! Validating - USing JOI
+  const schema = {
+    name: Joi.string().min(3).required(),
+  };
+
+  const result = Joi.validate(req.body, schema);
+
+  console.log(result);
+
+  if (result.error) {
+    res.status(400).send(result.error.details[0].message);
+    return;
+  }
   const course = {
     id: courses.length + 1,
     name: req.body.name,
@@ -53,6 +73,28 @@ app.get("/api/courses/:year/:month", (req, res) => {
 app.get("/api/posts/:year/:month", (req, res) => {
   res.send(req.query); //jo first rahega wahi display hoga
   res.send(req.params);
+});
+
+//! Handling Updating the course
+app.put("/api/courses/:id", (req, res) => {
+  //creating a schema for the input validation
+  const schema = {
+    name: Joi.string().min(3).required(),
+  };
+  //Look into the database
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  //if not found return status 404
+  if (!course) {
+    res.status(404).send("The course with given ID is not Found");
+    return;
+  }
+  //validate the input
+  const result = Joi.validate(req.body, schema);
+  //Input is invalid return status 400
+  if (result.error) res.status(400).send(result.error.details[0].message);
+  //Update the course
+  course.name = req.body.name;
+  res.send(course);
 });
 
 //PORT
