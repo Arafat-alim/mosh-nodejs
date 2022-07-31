@@ -78,9 +78,9 @@ app.get("/api/posts/:year/:month", (req, res) => {
 //! Handling Updating the course
 app.put("/api/courses/:id", (req, res) => {
   //creating a schema for the input validation
-  const schema = {
-    name: Joi.string().min(3).required(),
-  };
+  // const schema = {
+  //   name: Joi.string().min(3).required(),
+  // };
   //Look into the database
   const course = courses.find((c) => c.id === parseInt(req.params.id));
   //if not found return status 404
@@ -89,13 +89,25 @@ app.put("/api/courses/:id", (req, res) => {
     return;
   }
   //validate the input
-  const result = Joi.validate(req.body, schema);
+  // const result = Joi.validate(req.body, schema);
   //Input is invalid return status 400
-  if (result.error) res.status(400).send(result.error.details[0].message);
+  // const result = validateCourse(req.body);
+  const { error } = validateCourse(req.body);
+
+  if (error) res.status(400).send(error.details[0].message);
   //Update the course
   course.name = req.body.name;
   res.send(course);
 });
+
+//! Function for validate
+function validateCourse(course) {
+  const schema = {
+    name: Joi.string().min(3).required(),
+  };
+
+  return Joi.validate(course, schema);
+}
 
 //PORT
 const port = process.env.PORT || 3000;
