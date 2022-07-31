@@ -27,7 +27,8 @@ app.get("/api/courses/:year/:month", (req, res) => {
 
 //! Query strings
 app.get("/api/posts/:year/:month", (req, res) => {
-  res.send(req.query);
+  res.send(req.query); //jo first rahega wahi display hoga
+  res.send(req.params);
 });
 
 //PORT
