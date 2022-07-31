@@ -109,6 +109,21 @@ function validateCourse(course) {
   return Joi.validate(course, schema);
 }
 
+//Delete Req
+app.delete("/api/courses/:id", (req, res) => {
+  //! look up for the course
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  if (!course) {
+    return res.status(404).send("The course Id you entered is not Found");
+  }
+
+  //Delete the course
+  const index = courses.indexOf(course);
+  courses.splice(index, 1);
+  //Return the same course
+  res.send(course);
+});
+
 //PORT
 const port = process.env.PORT || 3000;
 //PORT listen
