@@ -1,10 +1,12 @@
 const express = require("express");
 const app = express();
+//Adding Middleware
+app.use(express.json());
 
 const courses = [
-  { id: 1, course: "course1" },
-  { id: 2, course: "course2" },
-  { id: 3, course: "course3" },
+  { id: 1, name: "course1" },
+  { id: 2, name: "course2" },
+  { id: 3, name: "course3" },
 ];
 
 //! Methods
@@ -26,11 +28,21 @@ app.get("/api/courses/", (req, res) => {
 // app.get("/api/courses/:id", (req, res) => {
 //   res.send(req.params.id);
 // });
-
+//! handling GET request
 app.get("/api/courses/:id", (req, res) => {
   const course = courses.find((c) => c.id === parseInt(req.params.id));
   if (!course) res.status(404).send("Course with the given ID is not found");
   res.send(course);
+});
+
+//! handling POST Request
+app.post("/api/courses", (req, res) => {
+  const course = {
+    id: courses.length + 1,
+    name: req.body.name,
+  };
+  courses.push(course);
+  res.send(courses);
 });
 
 app.get("/api/courses/:year/:month", (req, res) => {
