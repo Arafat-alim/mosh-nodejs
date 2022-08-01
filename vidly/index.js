@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+//Adding JOI
+const Joi = require("joi");
 
 //Adding Middleeare
 app.use(express.json());
@@ -24,7 +26,16 @@ app.get("/api/genres/:id", (req, res) => {
 
 //create a new genres
 app.post("/api/genres/", (req, res) => {
+  //! creating schema
+  const schema = {
+    name: Joi.string().min(3).required(),
+  };
+  const result = Joi.validate(req.body, schema);
+  if (result.error) {
+    return res.status(400).send(result.error.details[0].message);
+  }
   const genre = { id: genres.length + 1, name: req.body.name };
+
   genres.push(genre);
   res.send(genres);
 });
