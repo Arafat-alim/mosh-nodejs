@@ -60,5 +60,14 @@ app.put("/api/genres/:id", (req, res) => {
   res.send(genres);
 });
 
+//! Deteling Request
+app.delete("/api/genres/:id", (req, res) => {
+  const genre = genres.find((g) => g.id === parseInt(req.params.id));
+  if (!genre) return res.status(404).send("The Particular Genre is not Found");
+  const index = genres.indexOf(genre);
+  genres.splice(index, 1);
+  res.send(genres);
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, console.log(`Listening At ${port}`));
