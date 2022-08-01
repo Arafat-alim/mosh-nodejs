@@ -28,13 +28,14 @@ app.get("/api/genres/:id", (req, res) => {
 //create a new genres
 app.post("/api/genres/", (req, res) => {
   //! creating schema
-  const schema = {
-    name: Joi.string().min(3).required(),
-  };
-  const result = Joi.validate(req.body, schema);
-  if (result.error) {
-    return res.status(400).send(result.error.details[0].message);
-  }
+  //   const schema = {
+  //     name: Joi.string().min(3).required(),
+  //   };
+  //   const result = Joi.validate(req.body, schema);
+  const { error } = validateGenres(req.body);
+
+  if (error) return res.status(400).send(error.details[0].message);
+
   const genre = { id: genres.length + 1, name: req.body.name };
 
   genres.push(genre);
@@ -48,13 +49,13 @@ app.put("/api/genres/:id", (req, res) => {
   if (!genre) {
     return res.status(404).send("The Particular Genre Not Found");
   }
-  const schema = {
-    name: Joi.string().min(3).required(),
-  };
-  // inout validate
-  const result = Joi.validate(req.body, schema);
-  if (result.error)
-    return res.status(400).send(result.error.details[0].message);
+  //   const schema = {
+  //     name: Joi.string().min(3).required(),
+  //   };
+  // input validate
+  //   const result = Joi.validate(req.body, schema);
+  const { error } = validateGenres(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
   // update
   genre.name = req.body.name;
   res.send(genres);
@@ -68,6 +69,14 @@ app.delete("/api/genres/:id", (req, res) => {
   genres.splice(index, 1);
   res.send(genres);
 });
+
+// ! Validate function
+function validateGenres(genre) {
+  const schema = {
+    name: Joi.string().min(3).required(),
+  };
+  return Joi.validate(genre, schema);
+}
 
 const port = process.env.PORT || 3000;
 app.listen(port, console.log(`Listening At ${port}`));
