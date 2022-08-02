@@ -7,6 +7,7 @@ app.use(express.json());
 
 //inbuilt middlware
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 //custom middleware
 app.use(log);
