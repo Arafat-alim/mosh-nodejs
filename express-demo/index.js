@@ -10,7 +10,6 @@ app.use(express.json());
 
 //THird party middleware
 app.use(helmet());
-app.use(morgan("tiny"));
 
 //inbuilt middlware
 app.use(express.urlencoded({ extended: true }));
@@ -19,6 +18,15 @@ app.use(express.static("public"));
 //custom middleware
 app.use(log);
 
+//knowing our prgram environemnt
+console.log(`NODE_ENV ${process.env.NODE_ENV}`);
+
+console.log(`app : ${app.get("env")}`);
+
+if (app.get("env") === "development") {
+  app.use(morgan("tiny"));
+  console.log("Morgan is Working");
+}
 const courses = [
   { id: 1, name: "course1" },
   { id: 2, name: "course2" },
