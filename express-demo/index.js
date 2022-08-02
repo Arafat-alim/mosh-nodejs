@@ -5,6 +5,9 @@ const log = require("./logger");
 //Adding Middleware
 app.use(express.json());
 
+//inbuilt middlware
+app.use(express.urlencoded({ extended: true }));
+
 //custom middleware
 app.use(log);
 
