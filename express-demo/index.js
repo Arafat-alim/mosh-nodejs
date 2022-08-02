@@ -1,10 +1,16 @@
 const express = require("express");
+const config = require("config");
 const app = express();
 const Joi = require("joi");
 const log = require("./logger");
 //third party middleware
 const helmet = require("helmet");
 const morgan = require("morgan");
+
+// configuration
+console.log("Application Name " + config.get("name"));
+console.log("Mail Server Name " + config.get("mail.host"));
+console.log("Mail Password " + config.get("mail.password"));
 //Adding inbuilt Middleware
 app.use(express.json());
 
