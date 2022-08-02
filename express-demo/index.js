@@ -2,8 +2,15 @@ const express = require("express");
 const app = express();
 const Joi = require("joi");
 const log = require("./logger");
-//Adding Middleware
+//third party middleware
+const helmet = require("helmet");
+const morgan = require("morgan");
+//Adding inbuilt Middleware
 app.use(express.json());
+
+//THird party middleware
+app.use(helmet());
+app.use(morgan("tiny"));
 
 //inbuilt middlware
 app.use(express.urlencoded({ extended: true }));
