@@ -12,6 +12,10 @@ const log = require("./logger");
 const helmet = require("helmet");
 const morgan = require("morgan");
 
+//template engine
+app.set("view engine", "pug");
+app.set("views", "./views"); // default -- optional
+
 // configuration
 console.log("Application Name " + config.get("name"));
 console.log("Mail Server Name " + config.get("mail.host"));
@@ -53,9 +57,14 @@ const courses = [
 // app.post(); //Create
 // app.put(); //update
 // app.delete(); //delete
+
+app.get("/", (req, res) => {
+  res.render("index", { title: "My Express App", message: "Hello World" });
+});
+/*
 app.get("/", (req, res) => {
   res.send("Welcome to my API");
-}); //Read
+}); //Read */
 
 app.get("/api/courses", (req, res) => {
   res.send(courses);
