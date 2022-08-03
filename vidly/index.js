@@ -1,82 +1,12 @@
 const express = require("express");
 const app = express();
 //Adding JOI
-const Joi = require("joi");
-const { validate } = require("joi/lib/types/object");
 
+const genres = require("./routes/genres");
 //Adding Middleeare
 app.use(express.json());
-//Adding dummy database
-const genres = [
-  { id: 1, name: "Horror" },
-  { id: 2, name: "Comedy" },
-  { id: 3, name: "action" },
-];
 
-//get all genres
-app.get("/api/genres/", (req, res) => {
-  res.send(genres);
-});
-
-//find particular genres
-app.get("/api/genres/:id", (req, res) => {
-  const genre = genres.find((g) => g.id === parseInt(req.params.id));
-  if (!genres) res.status(404).send("No Genre Found");
-  res.send(genre);
-});
-
-//create a new genres
-app.post("/api/genres/", (req, res) => {
-  //! creating schema
-  //   const schema = {
-  //     name: Joi.string().min(3).required(),
-  //   };
-  //   const result = Joi.validate(req.body, schema);
-  const { error } = validateGenres(req.body);
-
-  if (error) return res.status(400).send(error.details[0].message);
-
-  const genre = { id: genres.length + 1, name: req.body.name };
-
-  genres.push(genre);
-  res.send(genres);
-});
-
-//! Updating Request PUT
-app.put("/api/genres/:id", (req, res) => {
-  // look up the id
-  const genre = genres.find((g) => g.id === parseInt(req.params.id));
-  if (!genre) {
-    return res.status(404).send("The Particular Genre Not Found");
-  }
-  //   const schema = {
-  //     name: Joi.string().min(3).required(),
-  //   };
-  // input validate
-  //   const result = Joi.validate(req.body, schema);
-  const { error } = validateGenres(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
-  // update
-  genre.name = req.body.name;
-  res.send(genres);
-});
-
-//! Deteling Request
-app.delete("/api/genres/:id", (req, res) => {
-  const genre = genres.find((g) => g.id === parseInt(req.params.id));
-  if (!genre) return res.status(404).send("The Particular Genre is not Found");
-  const index = genres.indexOf(genre);
-  genres.splice(index, 1);
-  res.send(genres);
-});
-
-// ! Validate function
-function validateGenres(genre) {
-  const schema = {
-    name: Joi.string().min(3).required(),
-  };
-  return Joi.validate(genre, schema);
-}
+app.use("/api/genres", genres);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
