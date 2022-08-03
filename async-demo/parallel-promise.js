@@ -1,11 +1,13 @@
 //! Parallel Promise
 const p1 = new Promise((resolve) => {
+  console.log("Async Operation 1...");
   setTimeout(() => {
     resolve(1);
-  }, 2000);
+  }, 4000);
 });
 
 const p2 = new Promise((resolve) => {
+  console.log("Async Operation 2...");
   setTimeout(() => {
     resolve(2);
   }, 2000);
