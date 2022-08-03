@@ -31,4 +31,11 @@ function getRepositories(username, callback) {
     callback(["repo1", "repo2", "repo3"]);
   }, 2000);
 }
+
+function getCommits(repo, callback) {
+  setTimeout(() => {
+    console.log("calling GithubAPI --", repo);
+    callback(["commits"]);
+  }, 2000);
+}
 console.log("After");
