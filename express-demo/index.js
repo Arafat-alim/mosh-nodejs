@@ -1,3 +1,8 @@
+//!adding debugger
+// const startupDebugger = require("debug")("app:startup");
+// const debDebugger = require("debug")("app:db");
+const debug = require("debug")("app:startup");
+
 const express = require("express");
 const config = require("config");
 const app = express();
@@ -10,7 +15,7 @@ const morgan = require("morgan");
 // configuration
 console.log("Application Name " + config.get("name"));
 console.log("Mail Server Name " + config.get("mail.host"));
-console.log("Mail Password " + config.get("mail.password"));
+// console.log("Mail Password " + config.get("mail.password"));
 //Adding inbuilt Middleware
 app.use(express.json());
 
@@ -31,8 +36,13 @@ console.log(`app : ${app.get("env")}`);
 
 if (app.get("env") === "development") {
   app.use(morgan("tiny"));
-  console.log("Morgan is Working");
+  //console.log("Morgan is Working"); //instead of using console.log()
+  // startupDebugger("Morgan is running");
+  debug("Morgan is Runnning");
 }
+//! Database work
+// debDebugger("Database is connected with ...");
+
 const courses = [
   { id: 1, name: "course1" },
   { id: 2, name: "course2" },
