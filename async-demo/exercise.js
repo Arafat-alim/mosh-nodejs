@@ -4,3 +4,5 @@ getCustomer(id, callback){
         callback({id: id, name: "Arafat", isGold: yes})
     }, 2000);
 }
+
+callback ki dunia
