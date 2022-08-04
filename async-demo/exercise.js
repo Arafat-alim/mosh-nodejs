@@ -1,10 +1,4 @@
-//callback approach
-// getCustomer(id, callback){
-//     setTimeout(() => {
-//         callback({id: id, name: "Arafat", isGold: yes})
-//     }, 2000);
-// }
-
+//! Exercise 1 - Callback mein banaya hai
 getCustomer(1, (user) => {
   console.log(user.name);
   isGoldMember(user.isGold, (movies) => {
