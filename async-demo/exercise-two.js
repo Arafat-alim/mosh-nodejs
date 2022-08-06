@@ -21,7 +21,7 @@ function getCustomer(id) {
     setTimeout(() => {
       console.log("Get Customer is calling");
       resolve({ id: id, name: "Arafat", isGold: false });
-    }, 2000); 
+    }, 2000);
   });
 }
 function isGoldMember(user, callback) {
