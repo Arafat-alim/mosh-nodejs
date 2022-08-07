@@ -1,13 +1,15 @@
 //Practising exercise
 console.log("before");
 //asynchronus code --
-const user = getUser(1);
-console.log(user); //undefined
+getUser(1, (user) => {
+  console.log(user);
+});
+
 console.log("After");
 
-function getUser(id) {
+function getUser(id, callback) {
   setTimeout(() => {
-    return { id: id, name: "Arafat" };
+    callback({ id: id, name: "Arafat" });
   }, 2000);
 }
 //How to deal with these code
