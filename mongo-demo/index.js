@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-//! mongoose gives an object
-// ! playground is my database name - it return a promise
+
 mongoose
-  .connect("mongodb://localhost/playground")
-  .then(() => console.log("Database connected"))
-  .catch((err) => console.log("Database cannot be connected.", err));
+  .connect("mongodb://127.0.0.1:27017/playground")
+  .then(() => console.log("Connected to Mongodb"))
+  .catch((err) => console.error("Database could not connected", err));
