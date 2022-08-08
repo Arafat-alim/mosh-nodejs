@@ -32,7 +32,14 @@ async function createCourse() {
 
 //Querying Documents
 async function getCourses() {
-  const courses = await Course.find()
+  const courses = await Course
+    // .find({author: "Mosh", isPublished: true})
+    // .find({price: 10}) //price = 10
+    // .find({price: {$gte: 10, $lte: 20}}) // greater and equal to 10 and less than or equal to 20
+    //.find({ price: { $in: [10, 15, 20] } }) // price equals to 10, 20 , 30
+    .find()
+    .or([{ author: "Mosh" }, { isPublished: true }])
+    .and([{ author: "Arafat" }, { isPublished: true }])
     .limit(10)
     .sort({ name: 1 }) // +1 indicated ascending order, -1 inditcate descending order
     .select({ name: 1, tags: 1 }); //showing the properties
