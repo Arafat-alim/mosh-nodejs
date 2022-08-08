@@ -36,12 +36,15 @@ async function getCourse() {
 // getCourse();
 
 //! function to fetch the data from the database
-// get all course
+// lists of aall courses
 async function getCourse() {
-  const courses = await Course.find() //return a promise
+  return await Course.find({ isPublished: true, tags: "backend" }) //return a promise
     .sort({ name: 1 })
     .select({ name: 1, author: 1 });
-  console.log(courses);
 }
 
-getCourse();
+async function run() {
+  const courses = await getCourse();
+  console.log(courses);
+}
+run();
