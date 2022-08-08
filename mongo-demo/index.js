@@ -14,12 +14,20 @@ const courseSchema = new mongoose.Schema({
   isPublished: Boolean,
 });
 
-//creting a model
-const Course = mongoose.model("Course", courseSchema);
-//creating an object
-const course = new Course({
-  name: "Node.js Course",
-  author: "Arafat",
-  tags: ["node", "backend"],
-  isPublished: true,
-});
+async function createCourse() {
+  //creting a model
+  const Course = mongoose.model("Course", courseSchema);
+  //creating an object
+  const course = new Course({
+    name: "Node.js Course",
+    author: "Arafat",
+    tags: ["node", "backend"],
+    isPublished: true,
+  });
+
+  //saving out docuemnt in database
+  const result = await course.save();
+  console.log(result); // it shows us a unique Indentifier
+}
+
+createCourse();
