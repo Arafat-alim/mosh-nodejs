@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 //connection with database
 mongoose
-  .connect("mongodb://localhost/mongo-ex-two")
+  .connect("mongodb://localhost/homework")
   .then(() => console.log("Database connected to Mongodb"))
   .catch((err) => console.error("Could not connect with Database", err));
 
@@ -17,7 +17,7 @@ const courseSchema = new mongoose.Schema({
 
 //create a collection using model --> class
 const Course = mongoose.model("Course", courseSchema);
-async function getCourse() {
+async function createCourse() {
   const course = new Course({
     name: "Java",
     tags: ["sde", "developer"],
@@ -29,6 +29,15 @@ async function getCourse() {
   //saving a document
   const result = await course.save();
   console.log(result);
+}
+
+// createCourse();
+
+//fetch the data from the database
+
+async function getCourse() {
+  const courses = await Course.find().limit(1);
+  console.log(courses);
 }
 
 getCourse();
