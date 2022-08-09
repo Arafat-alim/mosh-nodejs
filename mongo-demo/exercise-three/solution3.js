@@ -38,9 +38,8 @@ async function getCourse() {
 // lists of aall courses
 async function getCourse() {
   return await Course.find({ isPublished: true }) //return a promise
-    .or([{ tags: "frontend" }, { tags: "backend" }])
-    .sort("-price")
-    .select("name author price");
+    .or([{ price: { $gte: 15 } }, { name: /.*by.*/i }])
+    .sort("-price");
 }
 
 async function run() {
