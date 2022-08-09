@@ -19,9 +19,9 @@ const Course = mongoose.model("Course", courseSchema);
 async function createCourse() {
   //creating an object
   const course = new Course({
-    name: "Angular Course",
-    author: "Mosh",
-    tags: ["Angular", "frontend"],
+    name: "Maths",
+    author: "Fahad",
+    tags: ["maths", "mastery"],
     isPublished: true,
   });
 
@@ -51,7 +51,7 @@ async function getCourses() {
 }
 
 // createCourse();
-getCourses();
+// getCourses();
 
 //! RegEx
 // async function getCourses() {
@@ -61,3 +61,17 @@ getCourses();
 //     .find({ author: /.*Mosh.*/i }); // contain mosh,
 //   console.log(courses);
 // }
+
+//! updating --> query first
+async function updateCourse(id) {
+  const course = await Course.findById(id);
+  if (!course) return;
+
+  course.isPublished = true;
+  course.author = "Another Author";
+
+  const result = await course.save();
+  console.log(result);
+}
+
+updateCourse("62f2d012c55f0433dc7a990f");
