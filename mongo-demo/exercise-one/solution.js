@@ -1,4 +1,3 @@
-const { mongo } = require("mongoose");
 const mongoose = require("mongoose");
 
 //connection
