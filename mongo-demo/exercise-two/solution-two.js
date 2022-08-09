@@ -36,8 +36,12 @@ async function createCourse() {
 //fetch the data from the database
 
 async function getCourse() {
-  const courses = await Course.find().limit(1);
-  console.log(courses);
+  return await Course.find().limit(1);
 }
 
-getCourse();
+async function run() {
+  const course = await getCourse();
+  console.log(course);
+}
+
+run();
