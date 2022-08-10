@@ -51,7 +51,7 @@ const Course = mongoose.model("Course", courseSchema);
 async function createCourse() {
   //creating an object
   const course = new Course({
-    name: "Moral Science",
+    // name: "Moral Science",
     author: "Fahad",
     tags: [],
     isPublished: true,
@@ -65,7 +65,10 @@ async function createCourse() {
     console.log(result); // it shows us a unique Indentifier
     // await course.validate();
   } catch (ex) {
-    console.log(ex.message);
+    // console.log(ex.message);
+    for (field in ex.errors) {
+      console.log(ex.errors[field].message);
+    }
   }
 }
 createCourse();
