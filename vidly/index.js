@@ -1,6 +1,12 @@
+const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 //Adding JOI
+
+mongoose
+  .connect("mongodb://localhost/vidly")
+  .then(() => console.log("Connected with MongoDB"))
+  .catch((err) => console.error("Could not connected wtih MongoDB", err));
 
 const genres = require("./routes/genres");
 //Adding Middleeare
