@@ -19,6 +19,9 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: ["web", "mobile", "gamepad"],
+    lowercase: true,
+    // uppercase: true,
+    trim: true,
   },
   author: String,
   tags: {
@@ -43,6 +46,8 @@ const courseSchema = new mongoose.Schema({
     },
     min: 10,
     max: 100,
+    get: (v) => Math.round(v),
+    set: (v) => Math.round(v),
   },
 });
 //creting a model
@@ -51,12 +56,12 @@ const Course = mongoose.model("Course", courseSchema);
 async function createCourse() {
   //creating an object
   const course = new Course({
-    // name: "Moral Science",
-    author: "Fahad",
-    tags: [],
+    name: "C++ Course",
+    author: "Arafat",
+    tags: ["sde"],
     isPublished: true,
-    category: "web",
-    price: 15,
+    category: "Mobile",
+    price: 15.8,
   });
 
   try {
