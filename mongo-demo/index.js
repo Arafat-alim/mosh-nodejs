@@ -105,4 +105,28 @@ async function updateCourse3(id) {
   console.log(course);
 }
 
-updateCourse3("62f2d012c55f0433dc7a990f");
+// updateCourse3("62f2d012c55f0433dc7a990f");
+
+//! Delete a single document
+async function removeCourse1(id) {
+  const result = await Course.deleteOne({ _id: id });
+  console.log(result);
+}
+
+// removeCourse1("62f2d012c55f0433dc7a990f");
+
+//! Delete multiple document
+async function removeCourse2(id) {
+  const result = await Course.deleteMany({ _id: id });
+  console.log(result);
+}
+
+// removeCourse2("62f2d012c55f0433dc7a990f");
+
+//! delete a document using findByIdAndRemove()
+async function removeCourse3(id) {
+  // const course = await Course.findByIdAndRemove({ _id: id });
+  const course = await Course.findByIdAndRemove(id);
+  console.log(course);
+}
+removeCourse3("62f2d012c55f0433dc7a990f");
