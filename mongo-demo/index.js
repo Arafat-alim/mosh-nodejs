@@ -7,11 +7,29 @@ mongoose
 
 //creating a schema
 const courseSchema = new mongoose.Schema({
-  name: String,
+  // name: String,
+  name: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlenght: 255,
+    // match: /pattern/
+  },
+  category: {
+    type: String,
+    required: true,
+    enum: ["web", "mobile", "gamepad"],
+  },
   author: String,
   tags: [String],
   date: { type: Date, default: Date.now },
   isPublished: Boolean,
+  price: {
+    type: Number,
+    required: function () {
+      return this.isPublished;
+    },
+  },
 });
 //creting a model
 const Course = mongoose.model("Course", courseSchema);
@@ -19,16 +37,24 @@ const Course = mongoose.model("Course", courseSchema);
 async function createCourse() {
   //creating an object
   const course = new Course({
-    name: "Maths",
+    name: "Moral Science",
     author: "Fahad",
     tags: ["maths", "mastery"],
     isPublished: true,
+    category: "-",
+    price: 15,
   });
 
-  //saving out docuemnt in database
-  const result = await course.save();
-  console.log(result); // it shows us a unique Indentifier
+  try {
+    //saving out docuemnt in database
+    const result = await course.save();
+    console.log(result); // it shows us a unique Indentifier
+    // await course.validate();
+  } catch (ex) {
+    console.log(ex.message);
+  }
 }
+createCourse();
 
 //Querying Documents
 async function getCourses() {
@@ -129,4 +155,4 @@ async function removeCourse3(id) {
   const course = await Course.findByIdAndRemove(id);
   console.log(course);
 }
-removeCourse3("62f2d012c55f0433dc7a990f");
+// removeCourse3("62f2d012c55f0433dc7a990f");
