@@ -76,7 +76,7 @@ async function createCourse() {
     }
   }
 }
-createCourse();
+// createCourse();
 
 //Querying Documents
 async function getCourses() {
@@ -87,19 +87,19 @@ async function getCourses() {
     // .find({price: 10}) //price = 10
     // .find({price: {$gte: 10, $lte: 20}}) // greater and equal to 10 and less than or equal to 20
     //.find({ price: { $in: [10, 15, 20] } }) // price equals to 10, 20 , 30
-    .find()
+    .find({ _id: "62f3e00d76c6e93accd196de" }) //! important to add _id
     // .or([{ author: "Mosh" }, { isPublished: true }])
     // .and([{ author: "Arafat" }, { isPublished: true }])
-    .skip((pageNumber - 1) * pageSize)
-    .limit(pageSize)
+    // .skip((pageNumber - 1) * pageSize)
+    // .limit(pageSize)
     .sort({ name: 1 }) // +1 indicated ascending order, -1 inditcate descending order
-    .select({ name: 1, tags: 1 }) //showing the properties
-    .count();
-  console.log(courses);
+    .select({ name: 1, tags: 1, price: 1 }); //showing the properties
+  // .count();
+  console.log(courses[0].price);
 }
 
 // createCourse();
-// getCourses();
+getCourses();
 
 //! RegEx
 // async function getCourses() {
