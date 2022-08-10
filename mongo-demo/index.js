@@ -24,6 +24,7 @@ const courseSchema = new mongoose.Schema({
   tags: {
     type: Array,
     validate: {
+      isAsync: true,
       validator: function (v, callback) {
         setTimeout(() => {
           const result = v && v.length > 0;
