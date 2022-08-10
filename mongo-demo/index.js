@@ -74,4 +74,35 @@ async function updateCourse(id) {
   console.log(result);
 }
 
-updateCourse("62f2d012c55f0433dc7a990f");
+// updateCourse("62f2d012c55f0433dc7a990f");
+
+//! updating the document using direct query
+async function updateCourse2(id) {
+  const result = await Course.update(
+    { _id: id },
+    {
+      $set: {
+        author: "Mosh",
+        isPublished: false,
+      },
+    }
+  );
+  console.log(result); //here no need to save explicit
+}
+// updateCourse2("62f2d012c55f0433dc7a990f");
+
+async function updateCourse3(id) {
+  const course = await Course.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        author: "Rehmat",
+        isPublished: true,
+      },
+    },
+    { new: true }
+  );
+  console.log(course);
+}
+
+updateCourse3("62f2d012c55f0433dc7a990f");
