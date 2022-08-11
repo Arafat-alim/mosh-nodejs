@@ -13,11 +13,13 @@ const customerSchema = new mongoose.Schema({
   },
   isGold: {
     type: Boolean,
-    required: true,
+    default: false,
   },
   phone: {
-    type: Number,
+    type: String,
     required: true,
+    minlength: 3,
+    maxlength: 50,
   },
 });
 
@@ -83,9 +85,9 @@ router.delete("/:id", async (req, res) => {
 //! validate function
 function validateCustomer(customer) {
   const schema = {
-    name: joi.string().min(3).required(),
-    isGold: joi.boolean().required(),
-    phone: joi.number().min(10).required(),
+    name: joi.string().min(5).max(50).required(),
+    phone: joi.string().min(5).max(50).required(),
+    isGold: joi.boolean(),
   };
   return joi.validate(customer, schema);
 }
