@@ -49,7 +49,7 @@ async function createCourse(name, author) {
 }
 
 // createAuthor("Arafat", "I am a good boy", "hhtps://www.arafat.com");
-createCourse("NODE JS", "62f641af98934c1018720a89");
+// createCourse("NODE JS", "62f641af98934c1018720a89");
 
 //fetch the data from the MongoDB
 async function listAuthor() {
@@ -58,9 +58,13 @@ async function listAuthor() {
 }
 
 async function listCourse() {
-  const course = await Courses.find().sort("name").select("name");
+  const course = await Courses.find()
+    .populate("author", "name -_id")
+    .populate("category")
+    .select("name author")
+    .lean();
   console.log(course);
 }
 
 // listAuthor();
-// listCourse();
+listCourse();
