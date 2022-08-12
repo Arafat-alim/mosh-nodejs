@@ -31,6 +31,7 @@ router.post("/", async (req, res) => {
   customer = await customer.save();
   res.send(customer);
 });
+
 //update  customer
 router.put("/:id", async (req, res) => {
   const { error } = validate(req.body);
