@@ -29,10 +29,11 @@ async function createAuthor(name, bio, website) {
 //! create a course schema
 const courseSchema = new mongoose.Schema({
   name: String,
-  author: {
-    type: authorSchema,
-    required: true,
-  },
+  //   author: {
+  //     type: authorSchema,
+  //     required: true,
+  //   },
+  authors: [authorSchema],
 });
 
 //! create a model
@@ -49,6 +50,42 @@ async function createCourse(name, author) {
 }
 
 // createCourse("NodeJs", new Authors({ name: "Arafat" }));
+/*
+//! Create Multiple Author added as a sub document
+async function arraySubDoc(name, authors) {
+  const course = new Courses({
+    name,
+    authors,
+  });
+  const result = await course.save();
+  console.log(result.lean());
+}
+
+arraySubDoc("ReactJS", [
+  new Courses({ name: "Arafat" }),
+  new Courses({ name: "Ahemed" }),
+  new Courses({ name: "Javed Ali" }),
+]);
+*/
+
+//! Add sub document
+async function addAuthor(courseId, author) {
+  const course = await Courses.findById(courseId);
+  course.authors.push(author);
+  course.save();
+}
+
+// addAuthor("62f6776640ca6a32844019d2", new Authors({ name: "Rocky" }));
+
+//! remove sub document
+async function removeAuthor(courseId, authorId) {
+  const course = await Courses.findById(courseId);
+  const author = course.authors.id(authorId);
+  author.remove();
+  course.save();
+}
+
+removeAuthor("62f6776640ca6a32844019d2", "62f677ed757afc396c9e8e2c");
 
 //! update the sub document
 /*
@@ -71,6 +108,7 @@ async function updateSubDoc(courseId) {
 }
 updateSubDoc("62f653831776020820f65f94");
 */
+/*
 async function deleteSubDoc(courseId) {
   const course = await Courses.update(
     { _id: courseId },
@@ -82,7 +120,7 @@ async function deleteSubDoc(courseId) {
   );
 }
 deleteSubDoc("62f653831776020820f65f94");
-
+*/
 //! geting the author
 async function getAuthor() {
   const author = await Authors.find().select("name").lean();
