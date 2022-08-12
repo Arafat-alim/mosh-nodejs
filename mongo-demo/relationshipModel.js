@@ -1,3 +1,5 @@
+/*
+
 //! using Reference (Normalization) --> CONSISTENCY
 let author = {
   name: "Arafat",
@@ -26,3 +28,5 @@ let course = {
     author: "arafat",
   },
 };
+
+*/
