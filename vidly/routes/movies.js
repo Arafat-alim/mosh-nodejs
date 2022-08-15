@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { Genres } = require("../models/genre");
 
 //import Movies Class and validate function from model folder
 const { Movies, validate } = require("../models/movie");
@@ -19,7 +20,6 @@ router.get("/:id", async (req, res) => {
   res.send(movie);
 });
 
-
 //! Create a movie
 router.post("/", async (req, res) => {
   //! Validate input - body
@@ -27,9 +27,16 @@ router.post("/", async (req, res) => {
   if (error) {
     res.status(400).send(error.details[0].message);
   }
+
+  const genre = await Genres.findById(req.body.genreId);
+  if (!genre) return res.status(400).send("Invalid Genre.");
+
   let movie = new Movies({
     title: req.body.title,
-    genre: req.body.genre,
+    genre: {
+      _id: genre._id,
+      name: genre.name,
+    },
     numberInStock: req.body.numberInStock,
     dailyRentalsRate: req.body.dailyRentalsRate,
   });
@@ -44,23 +51,35 @@ router.put("/:id", async (req, res) => {
   if (error) {
     res.status(400).send(error.details[0].message);
   }
-  Movies.findByIdAndUpdate(
-    { _id: req.params.id },
+
+  const genre = await Genres.findById(req.body.genreId);
+  if (!genre) return res.status(400).send("Invalid Genre");
+
+  const movie = await Movies.findByIdAndUpdate(
+    req.params.id,
     {
       title: req.body.title,
-      genre: req.body.genre,
+      genre: {
+        _id: genre._id,
+        name: genre.name,
+      },
       numberInStock: req.body.numberInStock,
       dailyRentalsRate: req.body.dailyRentalsRate,
     },
     { new: true }
   );
+
+  if (!movie)
+    return res.status(404).send("The movie with the given ID was not found");
+
+  res.send(movie);
 });
 
 //! Delete a movie by its ID
 router.delete("/id", async (req, res) => {
-  const movie = await Movies.findById({ _id: req.params.id });
+  const movie = await Movies.findById(req.params.id);
   if (!movie) {
-    return res.status(404).send("The Movie ID is not found");
+    return res.status(404).send("The Movie ID was not found");
   }
   res.send(movie);
 });
