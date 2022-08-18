@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 const { Rentals, validate } = require("../models/rental");
@@ -5,7 +6,7 @@ const { Movies } = require("../models/movie");
 const { Customers } = require("../models/customer");
 const Fawn = require("fawn");
 
-Fawn.init();
+Fawn.init(mongoose);
 //!Create a get request
 router.get("/", async (req, res) => {
   const rentals = await Rentals.find().sort("-date");
