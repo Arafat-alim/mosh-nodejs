@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
   if (error) {
     res.status(400).send(error.details[0].message);
   }
-  // process is going on!
+  
   const genre = await Genres.findById(req.body.genreId);
   if (!genre) return res.status(400).send("Invalid Genre.");
   console.log(genre);
